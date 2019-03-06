@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>test</title>
+<link rel="stylesheet" href="./css/main.css">
+<link rel="stylesheet" href="./css/roboto.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<body onload="load_presentation();">
+  <div class="container">
+    <div class="top">
+      <div onclick="window.location.href='./index.html'" class="memory_title"><I>Sharing Memories</I></div>
+    </div>
+    <div class="middle">
+      <div style="position:absolute;left: 535px;top: 110px;width: 341px;height: 70px;line-height: 70px;color: rgba(235, 122, 103, 1);font-size: 48px;text-align: center;font-family: Roboto;">
+        Your Story Page
+      </div>
+      <div style="position:absolute;left: 10px;top: 182px;width: 1440px;height: 148px;line-height: 20px;opacity: 0.7;background-color: rgba(209, 208, 170, 1);color: rgba(16, 16, 16, 1);font-size: 14px;text-align: center;font-family: Roboto;">
+      </div>
+      <div style="position:absolute;left: 360px;top: 194px;width: 670px;height: 136px;line-height: 41px;color: rgba(235, 122, 103, 1);font-size: 28px;text-align: center;font-family: Roboto;">
+        In this page, you can see all feedbacks of your story. You can enlarge each picture by touch it.A slideshow will be played by press the blue button.
+      </div>
+      <button onclick="window.location.href='./index.html'" style="position:absolute;left: 44px;top: 350px;width: 236px;height: 60px;border-radius: 4px;background-color: rgba(235, 122, 103, 1);color: rgba(255, 255, 255, 1);font-size: 48px;text-align: center;box-shadow: 0px 0px 2px 0px rgba(170, 170, 170, 1);font-family: Roboto;border: 1px solid rgba(235, 122, 103, 1);">
+        THUIS
+      </button>
+      <div onclick="load_slide()" class="icon fa fa-youtube-play" style="position:absolute;left: 1280px;top: 335px;width: 90px;height: 90px;font-size:90px;color:#3f51b5;">
+      </div>
+      <div id="img_gallery">
+      </div>
+      <img id="enlarge_img">
+      </img>
+    </div>
+
+    <div class="bottom">
+      <div class="copyright">
+        Xuechen Liu<br>
+        Eindhoven University of Technology<br>
+        hilxc@sina.com
+      </div>
+    </div>
+
+
+  </div>
+<script src="./js/jquery.min.js"></script>
+<script src="./js/slide_show.js"></script>
+<script>
+function getURLParameter(name) {
+  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
+}
+myvar = getURLParameter('id');
+console.log(myvar);
+</script>
+</body>

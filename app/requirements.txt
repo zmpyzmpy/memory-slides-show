@@ -1,0 +1,5 @@
+selenium==3.7.0
+Flask==0.12.2
+tweepy==3.6.0
+Flask_Cors==3.0.3
+python_twitter==3.4.1

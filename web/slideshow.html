@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>test</title>
+<link rel="stylesheet" href="./css/main.css">
+<link rel="stylesheet" href="./css/roboto.css">
+<link rel="stylesheet" href="./css/component.css">
+<body>
+  <div class="container">
+    <div class="top">
+      <div onclick="window.location.href='./index.html'" class="memory_title"><I>Sharing Memories</I></div>
+    </div>
+
+      <div id="slide-container">
+      	<ul id="slide_ul">
+        </ul>
+      </div>
+      <div id="story-container">
+        <div class="story-title">
+          A cute germany girl I met 60 years ago.
+        </div>
+        <img class="story-img" src="./images/picture1.jpg"/>
+      </div>
+
+
+    <div class="bottom">
+      <div class="copyright">
+        Xuechen Liu<br>
+        Eindhoven University of Technology<br>
+        hilxc@sina.com
+      </div>
+    </div>
+
+
+  </div>
+
+  <script src="./js/jquery.min.js"></script>
+  <script src="./js/slide_show.js"></script>
+  <script>
+  var change_time = 3000;
+  $(window).load(function(){
+      var stories = show_slide();
+      console.log(stories);
+      var story_container = document.getElementById("story-container");
+  		var pages = $('#slide-container li'), current=0;
+  		var currentPage,nextPage;
+  		var timeoutID;
+  		var buttonClicked=0;
+      var same_story_idx = -1;
+      var same_story_count = 1;
+      story_container.innerHTML = '<div class="story-title">\
+                '+ stories[0]["text"]+'\
+              </div>\
+              <img class="story-img" src="../app'+stories[0]["img"][0]+'"/>';
+
+
+
+      var currentPos = 0;
+      var story_images = stories[0]["img"];
+
+      var repeated = false;
+
+      function change_story_image() {
+            if (++currentPos >= story_images.length) currentPos = 0;
+            story_container.innerHTML = '<div >\
+                    </div>\
+                    <img class="story-img" src="../app'+story_images[currentPos]+'"/>';
+      }
+
+  		var handler1=function(){
+  			buttonClicked=1;
+  			$('#slide-container .button').unbind('click');
+  			currentPage= pages.eq(current);
+  			if($(this).hasClass('prevButton'))
+  			{
+  				if (current <= 0)
+  					current=pages.length-1;
+  				else
+  					current=current-1;
+  				nextPage = pages.eq(current);
+
+  				nextPage.css("marginLeft",-1438);
+  				nextPage.show();
+  				nextPage.animate({ marginLeft: 0 }, 800,function(){
+  					currentPage.hide();
+  				});
+  				currentPage.animate({ marginLeft: 1438 }, 800,function(){
+  					$('#slide-container .button').bind('click',handler1);
+  				});
+  			}
+  			else
+  			{
+
+  				if (current >= pages.length-1)
+  					current=0;
+  				else
+  					current=current+1;
+  				nextPage = pages.eq(current);
+
+  				nextPage.css("marginLeft",1438);
+  				nextPage.show();
+  				nextPage.animate({ marginLeft: 0 }, 800,function(){
+  				});
+  				currentPage.animate({ marginLeft: -1438 }, 800,function(){
+  					currentPage.hide();
+  					$('#slide-container .button').bind('click',handler1);
+  				});
+  			}
+  		}
+
+  		var handler2=function(){
+  			if (buttonClicked==0)
+  			{
+  			$('#slide-container .button').unbind('click');
+  			currentPage= pages.eq(current);
+  			if (current >= pages.length-1)
+  				current=0;
+  			else
+  				current=current+1;
+
+        // story_container.innerHTML = '<div class="story-title">\
+        //           '+ stories[current]["text"]+'\
+        //         </div>\
+        //         <img class="story-img" src="../app'+stories[current]["img"][0]+'"/>';
+
+        if((story_images != stories[current]["img"])){
+          if((((same_story_count+1)>=story_images.length)&&repeated)||(same_story_count>=story_images.length)){
+            while((story_images == stories[current]["img"])&&(story_images.length!=1)){
+              if (current > pages.length-1)
+                current=0;
+              else
+                current=current+1;
+            }
+            story_images = stories[current]["img"];
+            same_story_idx = -1;
+            same_story_count = 1;
+            currentPos = -1;
+            repeated = false;
+          }
+          else{
+            current = same_story_idx;
+            repeated = true;
+          }
+        }
+        else{
+          if (same_story_idx == -1){
+            same_story_idx = current - 1;
+            same_story_count = same_story_count + 1;
+          }
+          else{
+            same_story_count = same_story_count + 1;
+          }
+          if((same_story_count>=story_images.length)&&repeated){
+            while((story_images == stories[current]["img"])&&(story_images.length!=1)){
+              if (current >= pages.length-1)
+                current=0;
+              else
+                current=current+1;
+            }
+            story_images = stories[current]["img"];
+            same_story_idx = -1;
+            same_story_count = 1;
+            currentPos = -1;
+            repeated = false;
+          }
+        }
+        // console.log(same_story_idx);
+        // console.log(same_story_count);
+        // console.log(story_images);
+
+        // console.log(stories[current]["img"]);
+        change_story_image();
+  			nextPage = pages.eq(current);
+  			nextPage.css("marginLeft",1438);
+  			nextPage.show();
+  			nextPage.animate({ marginLeft: 0 }, 800,function(){
+  			});
+  			currentPage.animate({ marginLeft: -1438 }, 800,function(){
+  				currentPage.hide();
+  				$('#slide-container .button').bind('click',handler1);
+  			});
+        if (pages.length>1){
+          timeoutID=setTimeout(function(){
+            handler2();
+          }, change_time);
+          }
+        }
+
+  		}
+
+  		$('#slide-container .button').click(function(){
+  			clearTimeout(timeoutID);
+  			handler1();
+  		});
+
+      if (pages.length>1){
+        timeoutID=setTimeout(function(){
+          handler2();
+        }, change_time);
+        }
+
+  });
+
+  </script>
+</body>
