@@ -1,5 +1,5 @@
 selenium==3.7.0
 flask>=1.0.0
 tweepy==3.6.0
-Flask_Cors==3.0.3
+Flask_Cors==3.0.9
 python_twitter==3.4.1
